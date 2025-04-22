@@ -1,0 +1,29 @@
+{
+  "name": "patientor-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "start": "node build/index.js",
+    "dev": "nodemon index.ts",
+    "tsc": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "NANDRASANTSOA Stéphan Gabriel",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "@stylistic/eslint-plugin": "^4.2.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/express": "^5.0.1",
+    "eslint": "^9.25.1",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.0"
+  }
+}
