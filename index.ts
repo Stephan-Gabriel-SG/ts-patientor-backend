@@ -8,4 +8,5 @@ app.listen(PORT, (error) => {
     return;
   }
   console.log(`Server is running on port ${PORT}`);
+  console.log(`link http://localhost:${PORT}`);
 });
