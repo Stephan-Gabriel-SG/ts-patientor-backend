@@ -21,6 +21,7 @@ router.get("/", (_req, res: Response<NonSensitivePatientInfo[]>) => {
       dateOfBirth: patient.dateOfBirth,
       gender: patient.gender,
       occupation: patient.occupation,
+      entries: patient.entries,
     }))
   );
 });
