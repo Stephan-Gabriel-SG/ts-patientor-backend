@@ -43,7 +43,9 @@ const data = [
   },
 ];
 
-const dataEntry: Patient[] = data.map((patient) =>
-  newPatientSchema.parse(patient)
-);
+const dataEntry: Patient[] = data.map((patient) => ({
+  ...newPatientSchema.parse(patient),
+  entries: [],
+}));
+
 export default dataEntry;

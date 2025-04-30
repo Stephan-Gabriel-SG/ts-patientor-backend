@@ -1,5 +1,9 @@
 import express, { Request, Response } from "express";
-import { addPatient, getPatients } from "../services/patientServices";
+import {
+  addPatient,
+  getPatientById,
+  getPatients,
+} from "../services/patientServices";
 import { NonSensitivePatientInfo, Patient } from "../services/types";
 import {
   errorMiddleware,
@@ -19,6 +23,20 @@ router.get("/", (_req, res: Response<NonSensitivePatientInfo[]>) => {
       occupation: patient.occupation,
     }))
   );
+});
+
+router.get("/:id", (req: Request, res: Response) => {
+  const id = req.params.id;
+  if (!id) {
+    res.status(400).json({ error: "bad request" });
+    return;
+  }
+  const patient = getPatientById(id);
+  if (!patient) {
+    res.status(401).json({ error: "patient not found" });
+    return;
+  }
+  res.status(200).json(patient);
 });
 
 router.post(
