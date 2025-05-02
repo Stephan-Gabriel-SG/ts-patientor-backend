@@ -5,7 +5,11 @@ export enum Gender {
   Female = "female",
   Other = "other",
 }
-
+export enum EntryType {
+  "HealthCheck" = "HealthCheck",
+  "OccupationalHealthcare" = "OccupationalHealthcare",
+  "Hospital" = "Hospital",
+}
 export interface Diagnosis {
   code: string;
   name: string;
@@ -25,7 +29,34 @@ export enum HealthCheckRating {
   "HighRisk" = 2,
   "CriticalRisk" = 3,
 }
+export const baseEntryShema = z.object({
+  id: z.string(),
+  description: z.string(),
+  date: z.string(),
+  specialist: z.string(),
+  diagnosisCodes: z.array(z.string()).optional(),
+  type: z.nativeEnum(EntryType),
+});
 
+export const healthCheckEntrySchema = z.object({
+  healthCheckRating: z.nativeEnum(HealthCheckRating),
+});
+
+export const occupationalHealthcareEntrySchema = z.object({
+  employerName: z.string(),
+  stickLeave: z
+    .object({ startDate: z.string(), endDate: z.string() })
+    .optional(),
+});
+
+export const hospitalEntrySchema = z.object({
+  discharge: z.object({
+    date: z.string(),
+    criteria: z.string(),
+  }),
+});
+
+export const idParser = z.string();
 interface HealthCheckEntry extends BaseEntry {
   type: "HealthCheck";
   healthCheckRating: HealthCheckRating;
@@ -73,3 +104,15 @@ export type Patient = z.infer<typeof newPatientSchema> & {
 };
 
 export type NonSensitivePatientInfo = Omit<Patient, "ssn" | "entries">;
+
+// parser
+export const parseDiagnosisCodes = (
+  object: unknown
+): Array<Diagnosis["code"]> => {
+  if (!object || typeof object !== "object" || !("diagnosisCodes" in object)) {
+    // we will just trust the data to be in correct form
+    return [] as Array<Diagnosis["code"]>;
+  }
+
+  return object.diagnosisCodes as Array<Diagnosis["code"]>;
+};
