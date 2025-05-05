@@ -8,14 +8,15 @@ export const getPatientById = (id: string): Patient | undefined =>
 
 export const addEntries = (id: string, newEntry: Entry) => {
   const index = patientData.findIndex((patient) => patient.id === id);
-  patientData.fill(
-    {
-      ...patientData[index],
-      entries: patientData[index].entries.concat(newEntry),
-    },
-    index
-  );
-  return patientData[index];
+  if (index === -1) {
+    throw new Error(`Patient with id ${id} not found`);
+  }
+  const updatedPatient = {
+    ...patientData[index],
+    entries: [...patientData[index].entries, newEntry],
+  };
+  patientData[index] = updatedPatient;
+  return updatedPatient;
 };
 
 export const addPatient = (newPatient: Patient): Patient => {
