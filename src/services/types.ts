@@ -10,6 +10,7 @@ export enum EntryType {
   "OccupationalHealthcare" = "OccupationalHealthcare",
   "Hospital" = "Hospital",
 }
+
 export interface Diagnosis {
   code: string;
   name: string;
@@ -23,6 +24,7 @@ interface BaseEntry {
   specialist: string;
   diagnosisCodes?: Array<Diagnosis["code"]>;
 }
+
 export enum HealthCheckRating {
   "Healthy" = 0,
   "LowRisk" = 1,
@@ -31,9 +33,9 @@ export enum HealthCheckRating {
 }
 export const baseEntryShema = z.object({
   id: z.string(),
-  description: z.string(),
-  date: z.string(),
-  specialist: z.string(),
+  description: z.string().refine((val) => val.trim().length > 0),
+  date: z.string().refine((val) => val.trim().length > 0),
+  specialist: z.string().refine((val) => val.trim().length > 0),
   diagnosisCodes: z.array(z.string()).optional(),
   type: z.nativeEnum(EntryType),
 });
@@ -43,7 +45,9 @@ export const healthCheckEntrySchema = z.object({
 });
 
 export const occupationalHealthcareEntrySchema = z.object({
-  employerName: z.string(),
+  employerName: z.string().refine((val) => val.trim().length > 0, {
+    message: "Employer name have not been defined",
+  }),
   stickLeave: z
     .object({ startDate: z.string(), endDate: z.string() })
     .optional(),
@@ -51,8 +55,12 @@ export const occupationalHealthcareEntrySchema = z.object({
 
 export const hospitalEntrySchema = z.object({
   discharge: z.object({
-    date: z.string(),
-    criteria: z.string(),
+    date: z.string().refine((val) => val.trim().length > 0, {
+      message: "Discharge date have not been defined.",
+    }),
+    criteria: z.string().refine((val) => val.trim().length > 0, {
+      message: "Discharge criteria have not been defined.",
+    }),
   }),
 });
 
