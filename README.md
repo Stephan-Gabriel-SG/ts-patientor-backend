@@ -11,14 +11,14 @@ A RESTful API backend for patient management system (Patientor), built with Node
 
 ```bash
 - To get the app running just install its dependencies with `npm install` and run it with `npm run dev`.
+```
 
 ### Routes
-- GET  http://localhost:3001/patients // get all patient
-- GET  http://localhost:3001/patients/:id // get patient by id
 
-- POST  http://localhost:3001/patients // create new patient
-- POST  http://localhost:3001/patients/:id/entries // add new entry for a patient
+- GET http://localhost:3001/patients // get all patient
+- GET http://localhost:3001/patients/:id // get patient by id
 
+- POST http://localhost:3001/patients // create new patient
+- POST http://localhost:3001/patients/:id/entries // add new entry for a patient
 
-- GET  http://localhost:3001/diagnoses // get all diagnoses
-```
+- GET http://localhost:3001/diagnoses // get all diagnoses
